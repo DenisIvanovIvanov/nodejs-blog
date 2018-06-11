@@ -1,0 +1,43 @@
+<html lang="en">
+
+<% include ../../partials/head %>
+
+<body class="text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 offset-md-2 mt-5">
+                <form method="post", action="/post-add">
+                    <p class="h4 text-center mb-4">Write new post</p>
+                    
+                    <label for="postTile" class="grey-text">Title</label>
+                    <input name="Title" type="text" id="postTitle" class="form-control">
+                
+                    <br>
+                    
+                    <label for="postTitle" class="grey-text">Description</label>
+                    <textarea name="Description" type="text" id="postDescr" class="form-control" rows="3"></textarea>
+                
+                    <br />
+
+                    <label for="postTags" class="grey-text">Tags</label>
+                    <input name="Tag" type="text" id="postTags" class="form-control">
+                
+                    <div class="text-center mt-4">
+                        <a href="/" class="btn btn-outline-default">Back</a>
+                        <button class="btn btn-outline-warning" type="submit">Post</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <% include ../../partials/scripts %>
+
+    <script src="/libs/froala/js/froala_editor.min.js"></script>
+    <script>
+        $('#postDescr').froalaEditor({
+            heightMin: 300
+        });
+    </script>
+</body>
+</html>

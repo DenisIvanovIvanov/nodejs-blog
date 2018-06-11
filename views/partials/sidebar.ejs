@@ -1,0 +1,56 @@
+<!-- News -->
+<aside class="d-none d-md-block col-md-4">
+    <div class="my_profile mb-3 text-center">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Search Post" aria-label="Recipient's username" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+                <a class="input-group-text" id="basic-addon2"><i class="fa fa-arrow-alt-circle-right"></i></a>
+            </div>
+        </div>
+        <img class="mt-2 profile-pic" src="/images/profile.jpg" alt="" width="110" height="110">
+        <div class="mt-2">
+            <strong class="grey-text">Denis Ivanov</strong>
+        </div>
+    </div>
+    <div class="latest_post">
+        <div class="card">
+            <h6 class="card-header text-center">Popular</h6>
+            <div class="card-body card-body-custom">
+                <% if (popularPost && popularPost.length > 0) { %>
+                    <ul class="list-group list-group-flush">
+                    <!-- print first 5, they are already sorted by date -->
+                    <% for(let i = 0; i < popularPost.length; i++) { %>
+                        <li class="list-group-item"><a href=<%="/post/" + popularPost[i]._id %>><%= popularPost[i].Title %></a><span class="pull-right"><i class="fa fa-comments mr-1"></i><%= popularPost[i].Comments.length %></span></li>
+                    <% } %>
+                    </ul>
+                <% } else { %>
+                    <div class="text-center mt-2">
+                        <p>Nothing to show!</p>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+    <div class="tags mt-3">
+        <div class="card">
+            <h6 class="card-header text-center">Tags</h6>
+            <div class="card-body">
+            <% if (tags.length > 0) { %>
+                    <ul class="list-inline tags-ul">
+                    <% for(let i = 0; i < tags.length; i++) { %>
+                        <li class="list-inline-item">
+                            <a class="badge badge-pill badge-primary">
+                                <%= tags[i]._id.toLowerCase() %>
+                            </a>
+                        </li>
+                    <% } %>
+                    </ul>
+            <% } else { %>
+                <div class="text-center mt-2">
+                    <p>Nothing to show!</p>
+                </div>
+            <% } %>
+            </div>
+        </div>
+    </div>
+</aside>

@@ -1,0 +1,55 @@
+<html lang="en">
+
+<% include ../partials/head %>
+
+<body class="text-center">
+    <div class="container container-signup">
+        <div class="row row-signup">
+            <div class="col-md-6 offset-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <form action='/signup' method='post'>
+                            <h1 class="h3 mb-3 card-title">Sign Up</h1>
+                            
+
+                            <div class="md-form">
+                                <label for="inputUsername">Username</label>
+                                <input name="username" type="text" id="inputUsername" class="form-control" required="">        
+                            </div>
+
+                            <div class="md-form">
+                                <label for="inputEmail">Email address</label>
+                                <input name="email" type="email" id="inputEmail" class="form-control" required="">        
+                            </div>
+
+                            <div class="md-form">
+                                <label for="inputPassword">Password</label>
+                                <input name="password" type="password" id="inputPassword" class="form-control" required="">       
+                            </div>
+                            
+                            <% if (message.length > 0) { %>
+                                <div class="alert alert-danger mt-3">
+                                    <span><%= message %></span>
+                                </div>
+                            <% } %>
+
+                            <div class="pt-4">
+                                <div class="row">
+                                    <div class="col-6 col-md-6">
+                                        <a href="/" class="btn btn-sm btn-outline-grey btn-block" type="button">Back</a>
+                                    </div>
+                                    <div class="col-6 col-md-6">
+                                        <button class="btn btn-sm btn-outline-blue btn-block" type="submit">Sign Up</button>
+                                    </div>
+                                </div>    
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <% include ../partials/scripts %>
+</body>
+</html>

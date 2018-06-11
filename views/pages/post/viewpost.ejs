@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+  
+  <% include ../../partials/head %>
+
+  <body>
+    
+    <% include ../../partials/nav %>
+
+    <div class="container mb-5">
+
+        <div class="row mt-5">
+
+            <section class="col-md-8">
+                <!-- TODO: Insert breadcrumb here -->
+                <div class="post">
+                    <header>
+                        <h3 class="font-weight-bold"><%= post.Title %></h4>
+                    </header>
+
+                    <div class="description">
+                        <p class="card-text"><%- post.Description %></p>
+                    </div>
+
+
+                    <footer class="post_info mt-4">
+                        <hr>
+                        <p>test</p>
+                    </footer>
+                </div>
+
+                <div class="post-comments mt-2">
+                    <% if (post.Comments && post.Comments.length > 0) { %>
+                        <% for (let i = 0; i < post.Comments.length; i++) { %>
+                            <div class="row mb-2 comment">
+                                <div class="col-md-2 post-comment-profile">
+                                    <img src="/images/noimage.png" width="50px" height="50px" alt="">
+                                    <label class="mt-1 text-secondary" for=""><%= post.Comments[i].Author %></label>
+                                </div>
+                                <div class="col-md-10 post-comment-content">
+                                    <div class="post-comment-header">
+                                        <small id="comment-published">Published <%= moment(post.Comments[i].CreatedOn).format('DD-MM-YYYY') %></small>
+                                        <% if (user && user.role === 'admin') { %>
+                                        <a class="pull-right" href="" data-postid=<%= post._id %> data-commentid=<%= post.Comments[i]._id %>>
+                                            <i class="fa fa-minus-circle"></i>
+                                        </a>
+                                        <% } %>
+                                    </div>
+                                    <hr id="comment-separator">
+                                    <p class="text-muted"><%= post.Comments[i].Description %></p>
+                                </div>
+                            </div>
+                        <% } %>
+                    <% } %>
+                </div>
+                
+                <div id="newComment" class="mt-2">
+                    <% if (!user) { %>
+                        <div class="alert alert-warning text-center">
+                            You need to be <span class="font-weight-bold">logged in</span> to comment!
+                        </div>
+                    <% } else { %>
+                        <div id="addNewComment" class="card">
+                            <form action="/post/comment-add" method="post">
+                                <input type="hidden" name="postid" value=<%= post._id %> />
+                                <div class="card-header">Add Comment</div>
+                                <div class="card-body comment-content">
+                                        <textarea class="form-control" name="content" id="" rows="3"></textarea>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="text-right">
+                                        <button type="submit" class="btn btn-sm btn-default">Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    <% } %>
+                </div>
+
+            </section>
+
+            <% include ../../partials/sidebar %>
+
+        </div>
+    </div>
+
+    <% include ../../partials/footer %>
+  
+    <% include ../../partials/scripts %>
+
+    <% if (user && user.role === 'admin') { %>
+        <script>
+            $(document).ready(() => {
+                $(document).on('click', 'a[data-commentid]', (e) => {
+                    e.preventDefault();
+                    
+                    const _id = $(e.currentTarget).data("commentid");
+                    const _postId = $(e.currentTarget).data("postid");
+
+                    $.post({
+                        url: '/post/comment-delete',
+                        data: {
+                            id: _id,
+                            postId: _postId
+                        },
+                        success: () => {
+                            location.reload();
+                        }
+                    });
+                });
+            })
+        </script>
+    <% } %>
+  </body>
+
+</html>

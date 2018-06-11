@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+  
+  <% include ../partials/head %>
+
+  <body>
+    
+    <% include ../partials/nav %>
+
+    <!-- Post render -->
+    <div class="container">
+      <div class="row mt-5">
+        <!-- Post -->
+        <section class="col-12 col-md-8">
+          <% if (post.length > 0) { %>
+            <% for(let i = 0; i < post.length; i++) { %>
+              <div class="mb-4 post">
+                <header>
+                  <a href=<%= "/post/" + post[i]._id %> class="post_title"><strong><%= post[i].Title %></strong></a>
+                  <br>
+                  <% if (post[i].Tags.length > 0) { %>
+                    <small>
+                      <i class="fa fa-tags"></i>
+                      <% for (let j = 0; j < post[i].Tags.length; j++) { %>
+                        <a href=""><%= post[i].Tags[j]._id %></a>
+                      <% } %>
+                    </small>
+                  <% } %>
+                </header>
+                <div class="description mb-2 mt-2">
+                  <% if (post[i].Description.length > 150) { %>
+                    <% post[i].Description = post[i].Description.substr(0, 150) + '...' %>
+                    <%- post[i].Description %><a href=<%= /post/ + post[i]._id %> class="ml-1">Read More</a>
+                  <% } else { %>
+                    <%- post[i].Description %>
+                  <% } %>
+                </div>
+                <hr>
+                <div class="post_info">
+                  <small>
+                    <i class="fa fa-comments "></i>
+                    <a href=<%= "/post/" + post[i]._id + "#comments" %>><%= post[i].Comments.length %> Comments</a>
+                    <i class="fa fa-male"></i>
+                    <a href=""><%= post[i].Author %></a>
+                    <i class="fa fa-calendar-alt"></i>
+                    <a href=""><%= moment(post[i].CreatedOn).format('DD-MM-YYYY') %></a>
+                  </small>
+                  <% if (user && user.role === 'admin') { %>
+                    <div class="pull-right">
+                      <a href="" id="delete-post-id" data-postid=<%= post[i]._id %> class="mr-1"><i class="fa fa-trash-alt"></i></a>
+                      <a href=<%= "/post/edit/" + post[i]._id %>><i class="fa fa-edit"></i></a>
+                    </div>
+                  <% } %>
+                </div>
+              </div>
+            <% } %>
+          <% } else { %>
+            <div class="jumbotron text-center">
+              <h4>Nothing to show, sorry!</h4>
+            </div>
+          <% } %>
+        <% include ../partials/pagination %>
+        </section>
+        
+        <% include ../partials/sidebar %>
+
+      </div>
+    </div>
+
+    <% include ../partials/footer %>
+
+    <% include ../partials/scripts %>
+
+    <% if (user && user.role === 'admin') { %>
+      <script>
+        $(document).ready(() => {
+          $(document).on('click', '#delete-post-id', (e) => {
+            e.preventDefault();
+
+            var _id = $(e.currentTarget).data("postid");
+
+            $.post({
+              url: "/post/delete",
+              data: {
+                id: _id
+              },
+              success: (data, status, jqxhr) => {
+                location.reload();
+              }
+            });
+          });
+        });  
+      </script>
+    <% } %>
+
+  </body>
+</html>

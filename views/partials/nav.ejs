@@ -1,0 +1,35 @@
+<nav class="navbar navbar-expand-lg bg-white sticky-top">
+    <div class="container">
+        <a class="navbar-brand" href="/">DenisX</a>
+        <% if (user && user.role === "admin") { %>
+        <a href="/post-add" class="btn btn-success btn-sm mr-auto"><i class="fa fa-plus"></i></a>
+        <a href="/dashboard" class="btn btn-primary btn-sm mr-auto">Dashboard</a>
+        <% } %>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mx-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/about">About Me</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/contact">Contact</a>
+            </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0 form-login">
+            <% if (isLogged) { %>
+                <p id="logged">Hi, <strong><%= user.username %></strong></p>
+                <a href="/logout" class="btn-sm" type"button"><i class="fa fa-sign-out-alt fa-2x"></i></a>
+            <% } else { %>
+                <a href="/signup" data-toggle="tooltip" title="Register" class="btn-sm" type"button"><i class="fa fa-sign-in-alt fa-2x"></i></a>
+                <a href="/login" class="btn-sm" type"button">Log In</a>
+            <% } %>
+            </form>
+        </div>
+    </div>
+</nav>

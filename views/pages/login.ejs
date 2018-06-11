@@ -1,0 +1,48 @@
+<html lang="en">
+
+<% include ../partials/head %>
+
+<body>
+    <div class="container container-login">
+        <div class="row row-login">
+            <div class="card mx-auto card-login">
+                <div class="card-title text-center">
+                    <img class="mt-4" src="/images/user-login-icon.png" alt="" width="82" height="82">
+                </div>
+                <div class="card-body card-login-body">
+                    <form action='/login' method='post'>
+                        <p class="h4 text-center mb-4">Log In</p>
+                        
+                        <label for="inputEmail" class="grey-text">Email</label>
+                        <input name="email" type="email" id="inputEmail" class="form-control" required="">
+                        
+                        <label for="inputPassword" class="grey-text mt-1">Password</label>
+                        <input name="password" type="password" id="inputPassword" class="form-control" required="">
+
+                        <% if (message.length > 0) { %>
+                        <div class="alert alert-danger mt-3">
+                            <span><%= message %></span>
+                        </div>
+                        <% } %>
+                        
+                        <div class="btn-group col-md-12 mt-3">
+                            <div class="col-6 col-md-6 col-lg-6">
+                                <a href="/" class="btn btn-sm btn-outline-grey btn-block" type="button">Back</a>
+                            </div>
+                            <div class="col-6 col-md-6 col-lg-6">
+                                <button class="btn btn-sm btn-outline-blue btn-block" type="submit">Sign in</button>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mt-3 text-center">
+                            <label for="">Not a member?</label><a href="/signup" class="ml-1">Sign Up</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <% include ../partials/scripts %>
+</body>
+</html>
